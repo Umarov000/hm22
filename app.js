@@ -2,6 +2,8 @@ const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
 const axios = require("axios");
+const { render } = require("ejs");
+const { title } = require("process");
 require("dotenv").config();
 
 const PORT = process.env.PORT || 3333;
@@ -35,6 +37,20 @@ app.get("/teachers", async (req, res) => {
     res.send({ message: "Ustoz, malumotlarini yuklashda xatolik" });
   }
 });
+app.get("/posts/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userData = await axios.get(
+      `https://jsonplaceholder.typicode.com/posts/${id}`
+    );
+    const post = userData.data;
+    res.render(createViewPage("post"), { title: "Post", post });
+  } catch (error) {
+    console.log(error);
+    res.send({ message: "Post yuklashda xatolik" });
+  }
+});
+
 
 app.get("/teacher/:teacherID", async (req, res) => {
   try {
@@ -93,6 +109,70 @@ app.delete("/teacher/:id", async(req, res)=>{
 
 // -----------------------------TEACHERS------------------------------------
 
+app.get("/posts", async (req,res)=>{
+  try {
+    const userData = await axios.get(
+      "https://jsonplaceholder.typicode.com/posts/"
+    );
+    const posts = userData.data
+    
+    res.render(createViewPage("posts"), {title: "Posts", posts})
+  } catch (error) {
+     console.log(error);
+     res.send({ message: "serverda xatolik" });
+    
+  }
+})
+app.get("/add-post", (req,res)=>{
+  try {
+    res.render(createViewPage("add-post"), {title:"Posts"})
+  } catch (error) {
+    console.log(error);
+     res.send({ message: "serverda xatolik" });
+
+    
+  }
+})
+
+
+app.post("/add-post", async (req, res)=>{
+  try {
+    console.log(req.body);
+    const { title, body } = req.body;
+    const userData = await axios.post(
+      "https://jsonplaceholder.typicode.com/posts",
+      { title, body }
+    );
+    const newPost = userData.data
+    res.render(createViewPage("posts"), {
+      title: "Posts",
+      posts:[newPost]
+    });
+
+    
+  } catch (error) {
+    console.log(error);
+     res.send({ message: "serverda xatolik" });
+
+    
+  }
+  
+})
+app.delete("/posts/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userData = await axios.delete(
+      `https://jsonplaceholder.typicode.com/posts/${id}`
+    );
+    console.log("Post deleted:", userData.data);
+    res.sendStatus(204); 
+  } catch (error) {
+    console.log(error);
+    res.send({ message: "Post o‘chirishda serverda xatolik" });
+  }
+});
+
+
 app.get("/students", (req, res) => {
   res.render(createViewPage("students"), { title: "Students" });
 });
@@ -103,22 +183,7 @@ app.get("/about", (req, res) => {
   res.render(createViewPage("about"), { title: "About" });
 });
 
-// app.get("/users", (req, res) => {
-//   res.send("<h1>Userlar sahifasi</h1>");
-// });
 
-// app.get("/user/:id", (req, res) => {
-//     const id = req.params.id
-//   res.send(`User id: ${id}`);
-// });
-
-// app.get("/user/:userId/staff/:staffId", (req, res) => {
-
-//   const userId = req.params.userId;
-//   const staffId = req.params.staffId;
-
-//   res.send(`User ID: ${userId}, Staff ID: ${staffId}`);
-// });
 
 app.use((req, res) => {
   res.render(createViewPage("404"), { title: "404 Not Found" });

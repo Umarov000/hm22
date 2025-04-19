@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./partials/head.ejs") %>
+<body>
+    <%- include("./partials/nav.ejs") %>
+
+    <h3>Postlar Sahifa</h3>
+    <ol>
+      <% posts.forEach((post) => { %>
+      <li> <a href="/posts/<%= post.id %>">
+         <%=post.title %> - 
+         <%=post.body %> 
+      </a>
+        </li>
+        <% })%>
+    </ol>
+    <h2><a href="/add-post"> Add new Post</a></h2>
+</body>
+</html>

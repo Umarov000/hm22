@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <h3>Yangi post kiriting:</h3>
+
+    <form action="/add-post" method="post" id="post-form">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" /><br /><br />
+
+      <label for="body">body</label>
+      <input type="text" name="body" id="body" /><br /><br />
+      <button type="submit">Saqlash</button>
+    </form>
+  </body>
+</html>

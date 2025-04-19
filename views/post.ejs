@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+
+    <h3> Post: <%= post.title %> </h3>
+    <p>Body: <%= post.body %></p>
+
+    <a href="/edit-post/<%= post.id %>">Tahrirlash</a>
+    <button data-id="<%= post.id %>" id="del-post">Ochirish</button>
+
+    <script>
+      const delPost = document.getElementById("del-post");
+      delPost.addEventListener("click", (event) => {
+        const id = event.target?.dataset?.id || null;
+        if (id) {
+          fetch(`/posts/${id}`, {
+            method: "DELETE",
+          }).then(() => {
+            console.log("Post deleted");
+            setTimeout(() => {
+              window.location.href = "/posts";
+            }, 2000);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
