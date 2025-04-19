@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <h3>Ustozlar Sahifa</h3>
+    <% console.log(teachers); %> <% const teacher = "Ustozi olam" %>
+    <ol>
+      <% teachers.forEach((teacher) => { %>
+      <li> <a href="/teacher/<%= teacher.id %>">
+         <%=teacher.name %> - <%=teacher.email %> 
+      </a>
+        </li>
+        <% })%>
+    </ol>
+    <h2><a href="/add-teacher"> Add new Teacher</a></h2>
+  </body>
+</html>

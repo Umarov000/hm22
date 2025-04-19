@@ -1,0 +1,25 @@
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: darkslategray;
+}
+nav ul li {
+  float: left;
+}
+nav ul li a {
+  display: inline-block;
+  color: bisque;
+  text-align: center;
+  padding: 10px 15px;
+  text-decoration: none;
+}
+nav li a:hover {
+  background-color: rgb(69, 111, 111);
+}
+.active a {
+  background-color: rgb(1, 53, 53);
+  color: bisque;
+  font-weight: 700;
+}

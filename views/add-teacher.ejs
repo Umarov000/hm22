@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include("./partials/head.ejs") %>
+  <body>
+    <%- include("./partials/nav.ejs") %>
+    <h3>Yangi uatoz malumotlarini kiriting:</h3>
+    <form action="/add-teacher" method="post" id="post-form">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" /><br /><br />
+
+      <label for="email">email</label>
+      <input type="email" name="email" id="email" /><br /><br />
+
+      <label for="phone">Phone</label>
+      <input type="tel" name="phone" id="email" /><br /><br />
+      <button type="submit">Saqlash</button>
+    </form>
+  </body>
+</html>
